@@ -10,7 +10,7 @@ public class tweetsApp {
     public static void main(String[] args) throws Exception {
 
         Path input1 = new Path("resources/700Tweets.txt");
-        Path output1 = new Path("hdfs://localhost:50071/out-step1/");
+        Path output1 = new Path("hdfs://localhost:50071/step1-out/");
         Configuration conf1 = new Configuration();
         ControlledJob job1 = new ControlledJob(conf1);
         job1.getJob().setJarByClass(wordsTfIdf.class);
@@ -24,7 +24,7 @@ public class tweetsApp {
         tweetsInputFormat.addInputPath(job1.getJob(), input1);
         FileOutputFormat.setOutputPath(job1.getJob(), output1);
 
-        Path output2 = new Path("hdfs://localhost:50071/out-step2/");
+        Path output2 = new Path("hdfs://localhost:50071/step2-out/");
         Configuration conf2 = new Configuration();
         ControlledJob job2 = new ControlledJob(conf2);
         job2.getJob().setJarByClass(L2CalculationPerTweet.class);
@@ -38,7 +38,7 @@ public class tweetsApp {
         tweetsTextInputFormat.addInputPath(job2.getJob(),output1);
         FileOutputFormat.setOutputPath(job2.getJob(),output2);
 
-        Path output3 = new Path("hdfs://localhost:50071/out-step3/");
+        Path output3 = new Path("hdfs://localhost:50071/step3-out/");
         Configuration conf3 = new Configuration();
         ControlledJob job3 = new ControlledJob(conf3);
         job3.getJob().setJarByClass(createPairsFromWords.class);
@@ -52,7 +52,7 @@ public class tweetsApp {
         tweetsTextInputFormat.addInputPath(job3.getJob(),output2);
         FileOutputFormat.setOutputPath(job3.getJob(),output3);
 
-        Path output4 = new Path("hdfs://localhost:50071/out-step4/");
+        Path output4 = new Path("hdfs://localhost:50071/step4-out/");
         Configuration conf4 = new Configuration();
         ControlledJob job4 = new ControlledJob(conf4);
         job4.getJob().setJarByClass(cosineSimilarity.class);
